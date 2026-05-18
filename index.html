@@ -848,6 +848,88 @@ const VOCAB = [
 ];
 
 // ============================================================
+// TEACHER'S EXACT MC OPTIONS (index matches VOCAB above, 0-based)
+// Each entry: { prompt: English, opts: [Spanish options], correctIdx: 0-3 }
+// When direction is ES->EN, prompt=Spanish, opts=English meanings
+// ============================================================
+const MC_QUESTIONS_EN_ES = [
+  // Q1
+  { opts: ["para empezar / primero / al principio...", "Es lógico pensar que...", "Quiero enfatizar la idea de...", "Me interesa tu opinion sobre..."], correctIdx: 0 },
+  // Q2
+  { opts: ["Es lógico pensar que...", "como consecuencia...", "por ejemplo / un ejemplo de esto es...", "en primer lugar..."], correctIdx: 3 },
+  // Q3
+  { opts: ["por ejemplo / un ejemplo de esto es...", "¿Podría ser que...?", "la idea principal es...", "además..."], correctIdx: 2 },
+  // Q4
+  { opts: ["el autor de este artículo...", "¿Me puedes explicar / aclarar...?", "además...", "para continuar / para seguir..."], correctIdx: 0 },
+  // Q5
+  { opts: ["Has dicho que / has explicado que...", "para continuar / para seguir...", "la verdad es que...", "como afirma / sugiere (el autor)..."], correctIdx: 3 },
+  // Q6
+  { opts: ["lo importante es...", "de acuerdo con / según...", "Qué útil aprender que...", "No estoy de acuerdo con... / No coincido con..."], correctIdx: 1 },
+  // Q7
+  { opts: ["desafortunadamente / desgraciadamente...", "la verdad es que...", "¿Podría ser que...?", "Me interesa tu opinion sobre..."], correctIdx: 1 },
+  // Q8
+  { opts: ["es dudoso que / dudo que... (subjuntivo)", "lo importante es...", "para continuar / para seguir...", "además..."], correctIdx: 2 },
+  // Q9
+  { opts: ["lo importante es...", "Qué útil aprender que...", "hay que tomar en cuenta que...", "debido a / a causa de / por culpa de..."], correctIdx: 0 },
+  // Q10
+  { opts: ["Qué útil aprender que...", "lo importante es...", "para concluir / para terminar...", "además..."], correctIdx: 3 },
+  // Q11
+  { opts: ["por ejemplo / un ejemplo de esto es...", "desafortunadamente / desgraciadamente...", "para continuar / para seguir...", "Nunca sabía (que)..."], correctIdx: 0 },
+  // Q12
+  { opts: ["Nunca sabía (que)...", "como consecuencia...", "para concluir / para terminar...", "¿Qué opinas (de...)? / ¿Qué piensas sobre...?"], correctIdx: 1 },
+  // Q13
+  { opts: ["en conclusión / en fin / en resumen...", "como consecuencia...", "debido a / a causa de / por culpa de...", "¿Por qué tenías interés en...?"], correctIdx: 2 },
+  // Q14
+  { opts: ["para empezar / primero / al principio...", "para concluir / para terminar...", "¿Podría ser que...?", "es evidente que / está claro que..."], correctIdx: 3 },
+  // Q15
+  { opts: ["es dudoso que / dudo que... (subjuntivo)", "debido a / a causa de / por culpa de...", "¿Podemos analizar un poco más la idea de...?", "la verdad es que..."], correctIdx: 0 },
+  // Q16
+  { opts: ["la verdad es que...", "la idea principal es...", "hay que tomar en cuenta que...", "para empezar / primero / al principio..."], correctIdx: 2 },
+  // Q17
+  { opts: ["desafortunadamente / desgraciadamente...", "el autor de este artículo...", "No estoy de acuerdo con... / No coincido con...", "Si te entiendo bien..."], correctIdx: 0 },
+  // Q18
+  { opts: ["de acuerdo con / según...", "Es lógico pensar que...", "hay que tomar en cuenta que...", "para concluir / para terminar..."], correctIdx: 3 },
+  // Q19
+  { opts: ["por ejemplo / un ejemplo de esto es...", "en primer lugar...", "en conclusión / en fin / en resumen...", "Disculpa, pero no entiendo..."], correctIdx: 2 },
+  // Q20
+  { opts: ["Disculpa, pero no entiendo...", "es dudoso que / dudo que... (subjuntivo)", "para continuar / para seguir...", "¿Por qué tenías interés en...?"], correctIdx: 3 },
+  // Q21
+  { opts: ["¿Me puedes explicar / aclarar...?", "además...", "Es lógico pensar que...", "¿Podemos analizar un poco más la idea de...?"], correctIdx: 2 },
+  // Q22
+  { opts: ["¿Qué evidencia hay para...?", "en conclusión / en fin / en resumen...", "¿Qué opinas (de...)? / ¿Qué piensas sobre...?", "el autor de este artículo..."], correctIdx: 2 },
+  // Q23
+  { opts: ["¿Qué evidencia hay para...?", "¿Por qué tenías interés en...?", "aprendí que / entendí que...", "es evidente que / está claro que..."], correctIdx: 0 },
+  // Q24
+  { opts: ["¿Por qué tenías interés en...?", "es evidente que / está claro que...", "Has dicho que / has explicado que...", "¿Me puedes explicar / aclarar...?"], correctIdx: 3 },
+  // Q25
+  { opts: ["Disculpa, pero no entiendo...", "¿Por qué tenías interés en...?", "como consecuencia...", "el autor de este artículo..."], correctIdx: 0 },
+  // Q26
+  { opts: ["como consecuencia...", "para concluir / para terminar...", "es evidente que / está claro que...", "¿Podría ser que...?"], correctIdx: 3 },
+  // Q27
+  { opts: ["Me interesa tu opinion sobre...", "por ejemplo / un ejemplo de esto es...", "Lo que más me interesa es...", "¿Qué evidencia hay para...?"], correctIdx: 0 },
+  // Q28
+  { opts: ["¿Podemos analizar un poco más la idea de...?", "para concluir / para terminar...", "para empezar / primero / al principio...", "Lo que más me interesa es..."], correctIdx: 3 },
+  // Q29
+  { opts: ["Si te entiendo bien...", "el autor de este artículo...", "la idea principal es...", "No estoy de acuerdo con... / No coincido con..."], correctIdx: 3 },
+  // Q30
+  { opts: ["Qué útil aprender que...", "Quiero enfatizar la idea de...", "es evidente que / está claro que...", "desafortunadamente / desgraciadamente..."], correctIdx: 0 },
+  // Q31
+  { opts: ["Nunca sabía (que)...", "¿Me puedes explicar / aclarar...?", "Si te entiendo bien...", "¿Podemos analizar un poco más la idea de...?"], correctIdx: 0 },
+  // Q32
+  { opts: ["Quiero enfatizar la idea de...", "para empezar / primero / al principio...", "la verdad es que...", "Disculpa, pero no entiendo..."], correctIdx: 0 },
+  // Q33
+  { opts: ["¿Podemos analizar un poco más la idea de...?", "Me interesa tu opinion sobre...", "¿Qué opinas (de...)? / ¿Qué piensas sobre...?", "para concluir / para terminar..."], correctIdx: 0 },
+  // Q34
+  { opts: ["de acuerdo con / según...", "Has dicho que / has explicado que...", "el autor de este artículo...", "¿Qué opinas (de...)? / ¿Qué piensas sobre...?"], correctIdx: 1 },
+  // Q35
+  { opts: ["Quiero enfatizar la idea de...", "en conclusión / en fin / en resumen...", "Si te entiendo bien...", "Lo que más me interesa es..."], correctIdx: 2 },
+  // Q36
+  { opts: ["para empezar / primero / al principio...", "aprendí que / entendí que...", "Disculpa, pero no entiendo...", "debido a / a causa de / por culpa de..."], correctIdx: 1 },
+  // Q37
+  { opts: ["leí algo relatado...", "como afirma / sugiere (el autor)...", "¿Qué evidencia hay para...?", "para concluir / para terminar..."], correctIdx: 0 },
+];
+
+// ============================================================
 // STATE
 // ============================================================
 let studentName = '';
@@ -1126,9 +1208,12 @@ function showResults() {
 // MULTIPLE CHOICE
 // ============================================================
 function startMC() {
-  mcQueue = shuffle(VOCAB).map(item => {
+  // Build queue using teacher's exact options, shuffled order
+  const indices = shuffle([...Array(VOCAB.length).keys()]);
+  mcQueue = indices.map(i => {
+    // Randomly show EN->ES (use teacher's Spanish options) or ES->EN (generate English options from VOCAB)
     const dir = randomDir();
-    return { item, dir };
+    return { vocabIdx: i, item: VOCAB[i], dir };
   });
   mcIndex = 0;
   showScreen('mc-screen');
@@ -1138,7 +1223,7 @@ function startMC() {
 function renderMC() {
   if (mcIndex >= mcQueue.length) { showResults(); return; }
   mcAnswered = false;
-  const { item, dir } = mcQueue[mcIndex];
+  const { vocabIdx, item, dir } = mcQueue[mcIndex];
   const { prompt, answer } = getPromptAnswer(item, dir);
   const pct = Math.round(mcIndex / mcQueue.length * 100);
   document.getElementById('mc-progress').style.width = pct + '%';
@@ -1151,14 +1236,21 @@ function renderMC() {
   document.getElementById('mc-next').className = 'btn-next';
   document.getElementById('mc-score-pill').textContent = sessionCorrect + ' / ' + sessionTotal;
 
-  // Build 4 options: 1 correct + 3 wrong
-  const wrongPool = VOCAB.filter(v => v !== item);
-  const wrongs = shuffle(wrongPool).slice(0, 3).map(v => dir === 'en-es' ? v.es : v.en);
-  const options = shuffle([answer, ...wrongs]);
+  let options;
+  if (dir === 'en-es') {
+    // Use teacher's exact Spanish options for EN->ES questions
+    const qData = MC_QUESTIONS_EN_ES[vocabIdx];
+    options = shuffle(qData.opts.map((opt, i) => ({ text: opt, correct: i === qData.correctIdx })));
+  } else {
+    // ES->EN: show Spanish prompt, pick from English meanings (use random pool since teacher only set EN->ES)
+    const wrongPool = VOCAB.filter((_, i) => i !== vocabIdx);
+    const wrongs = shuffle(wrongPool).slice(0, 3).map(v => v.en);
+    options = shuffle([{ text: item.en, correct: true }, ...wrongs.map(t => ({ text: t, correct: false }))]);
+  }
 
   const container = document.getElementById('mc-options');
-  container.innerHTML = options.map((opt, i) =>
-    `<button class="mc-opt" onclick="selectMC(this, '${escStr(opt)}', '${escStr(answer)}')">${opt}</button>`
+  container.innerHTML = options.map(opt =>
+    `<button class="mc-opt" onclick="selectMC(this, '${escStr(opt.text)}', '${escStr(answer)}')">${opt.text}</button>`
   ).join('');
 }
 
