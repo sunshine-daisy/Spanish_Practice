@@ -123,6 +123,7 @@ body::before {
   letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 700;
+  margin-top: 10px;
   margin-bottom: 28px;
 }
 
@@ -137,8 +138,9 @@ body::before {
   text-align: left;
 }
 .code-card h3 {
-  font-family: 'Pacifico', cursive;
+  font-family: 'Nunito', sans-serif;
   font-size: 18px;
+  font-weight: 800;
   color: var(--coral);
   margin-bottom: 18px;
   text-align: center;
@@ -819,27 +821,27 @@ const VOCAB = [
   { en: "for example", es: "por ejemplo / un ejemplo de esto es" },
   { en: "consequently", es: "como consecuencia" },
   { en: "due to / because of", es: "debido a / a causa de / por culpa de" },
-  { en: "it's clear that", es: "es evidente que / está claro que" },
-  { en: "it's doubtful that", es: "es dudoso que / dudo que (subjuntivo)" },
+  { en: "it's clear that / it is clear that", es: "es evidente que / está claro que" },
+  { en: "it's doubtful that / it is doubtful that", es: "es dudoso que / dudo que (subjuntivo)" },
   { en: "one needs to keep in mind that", es: "hay que tomar en cuenta que" },
   { en: "unfortunately, sadly", es: "desafortunadamente / desgraciadamente" },
   { en: "to conclude", es: "para concluir / para terminar" },
   { en: "in conclusion, finally", es: "en conclusión / en fin / en resumen" },
   { en: "why did you have an interest in", es: "¿Por qué tenías interés en?" },
-  { en: "it's logical to think that", es: "Es lógico pensar que" },
-  { en: "what's your opinion / what do you think about", es: "¿Qué opinas (de...)? / ¿Qué piensas sobre?" },
+  { en: "it's logical to think that / it is logical to think that", es: "Es lógico pensar que" },
+  { en: "what's your opinion / what is your opinion / what do you think about", es: "¿Qué opinas (de...)? / ¿Qué piensas sobre?" },
   { en: "what evidence is there for", es: "¿Qué evidencia hay para?" },
   { en: "can you explain / clarify", es: "¿Me puedes explicar / aclarar?" },
-  { en: "pardon, but I don't understand", es: "Disculpa, pero no entiendo" },
+  { en: "pardon, but I don't understand / pardon but I do not understand", es: "Disculpa, pero no entiendo" },
   { en: "could it be that", es: "¿Podría ser que?" },
-  { en: "I'm interested in your opinion about", es: "Me interesa tu opinion sobre" },
+  { en: "I'm interested in your opinion about / I am interested in your opinion about", es: "Me interesa tu opinion sobre" },
   { en: "the thing that interests me most is", es: "Lo que más me interesa es" },
-  { en: "I don't agree with", es: "No estoy de acuerdo con / No coincido con" },
-  { en: "I think it's interesting to learn", es: "Qué útil aprender que" },
+  { en: "I don't agree with / I do not agree with", es: "No estoy de acuerdo con / No coincido con" },
+  { en: "I think it's interesting to learn / I think it is interesting to learn", es: "Qué útil aprender que" },
   { en: "I never knew (that)", es: "Nunca sabía (que)" },
   { en: "I want to highlight the idea that", es: "Quiero enfatizar la idea de" },
   { en: "can we analyze the idea that", es: "¿Podemos analizar un poco más la idea de?" },
-  { en: "you've said that / you've explained that", es: "Has dicho que / has explicado que" },
+  { en: "you've said that / you have said that / you've explained that / you have explained that", es: "Has dicho que / has explicado que" },
   { en: "if I understand you right", es: "Si te entiendo bien" },
   { en: "I learned that / I understood that", es: "aprendí que / entendí que" },
   { en: "I read something related", es: "leí algo relatado" }
@@ -960,8 +962,25 @@ function stripAccents(s) {
 }
 
 function normalizeAnswer(s) {
-  // Remove punctuation at start/end, normalize spaces, strip accents
-  return stripAccents(s.replace(/[¿¡?.!,]/g, '').trim().toLowerCase().replace(/\s+/g, ' '));
+  let r = s.replace(/[¿¡?.!,]/g, '').trim().toLowerCase().replace(/\s+/g, ' ');
+  r = r
+    .replace(/don't/g, 'do not').replace(/doesn't/g, 'does not')
+    .replace(/didn't/g, 'did not').replace(/it's/g, 'it is')
+    .replace(/that's/g, 'that is').replace(/there's/g, 'there is')
+    .replace(/i'm/g, 'i am').replace(/i've/g, 'i have')
+    .replace(/i'd/g, 'i would').replace(/can't/g, 'cannot')
+    .replace(/won't/g, 'will not').replace(/isn't/g, 'is not')
+    .replace(/aren't/g, 'are not').replace(/wasn't/g, 'was not')
+    .replace(/weren't/g, 'were not').replace(/haven't/g, 'have not')
+    .replace(/hasn't/g, 'has not').replace(/hadn't/g, 'had not')
+    .replace(/wouldn't/g, 'would not').replace(/couldn't/g, 'could not')
+    .replace(/shouldn't/g, 'should not').replace(/i'll/g, 'i will')
+    .replace(/you've/g, 'you have').replace(/what's/g, 'what is')
+    .replace(/that's/g, 'that is').replace(/who's/g, 'who is')
+    .replace(/he's/g, 'he is').replace(/she's/g, 'she is')
+    .replace(/they're/g, 'they are').replace(/we're/g, 'we are')
+    .replace(/you're/g, 'you are');
+  return stripAccents(r);
 }
 
 // Check if user answer matches any alternative in the phrase
@@ -1339,31 +1358,38 @@ function renderPairRound() {
 
 function selectPairItem(el, side, id) {
   if (el.classList.contains('matched')) return;
+  // Block clicks during wrong-flash animation
+  if (el.classList.contains('wrong-flash')) return;
 
   if (!pairSelected) {
-    // First selection
+    // First selection — highlight it
     pairSelected = { el, side, id };
     el.classList.add('selected');
   } else {
-    // Second selection
+    // Clicking the already-selected item — deselect it
     if (pairSelected.el === el) {
-      // Deselect
       el.classList.remove('selected');
       pairSelected = null;
       return;
     }
+    // Clicking another item on the SAME side — move selection
     if (pairSelected.side === side) {
-      // Same side — switch selection
       pairSelected.el.classList.remove('selected');
       pairSelected = { el, side, id };
       el.classList.add('selected');
       return;
     }
-    // Check match: ids must be equal (same vocab item)
-    const isMatch = pairSelected.id === id;
+    // Different side — attempt a match
+    const firstEl = pairSelected.el;
+    const firstId = pairSelected.id;
+    const isMatch = firstId === id;
+
+    // Clear selection state FIRST before any animation
+    pairSelected = null;
+
     if (isMatch) {
-      pairSelected.el.classList.remove('selected');
-      pairSelected.el.classList.add('matched');
+      firstEl.classList.remove('selected');
+      firstEl.classList.add('matched');
       el.classList.add('matched');
       pairMatched.push(id);
       sessionCorrect++;
@@ -1372,7 +1398,6 @@ function selectPairItem(el, side, id) {
       updateStreak(true);
       launchConfetti(15);
       document.getElementById('pair-score-pill').textContent = sessionCorrect + ' matched';
-      pairSelected = null;
 
       // Check round complete
       if (pairMatched.length === pairRoundItems.length) {
@@ -1389,19 +1414,19 @@ function selectPairItem(el, side, id) {
         }, 400);
       }
     } else {
-      // Wrong match
-      pairSelected.el.classList.remove('selected');
-      pairSelected.el.classList.add('wrong-flash');
+      // Wrong match — flash both red, then fully clear both
+      firstEl.classList.remove('selected');
+      firstEl.classList.add('wrong-flash');
       el.classList.add('wrong-flash');
       sessionTotal++;
       updateStreak(false);
-      const wrongItem = pairRoundItems[pairSelected.id];
+      const wrongItem = pairRoundItems[firstId];
       if (wrongItem) sessionMissed.push({ prompt: wrongItem.en, answer: wrongItem.es });
       setTimeout(() => {
-        pairSelected.el.classList.remove('wrong-flash');
+        firstEl.classList.remove('wrong-flash');
         el.classList.remove('wrong-flash');
-      }, 600);
-      pairSelected = null;
+        // pairSelected is already null — nothing left selected
+      }, 700);
     }
   }
 }
