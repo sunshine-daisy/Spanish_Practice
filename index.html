@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>🌺 Spanish Practice — Camila</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌺</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fffdf7;
+  --bg2: #fff8ee;
+  --bg3: #fff3e0;
+  --card: #ffffff;
+  --teal: #00b4a0;
+  --teal-dark: #008f7e;
+  --teal-light: #e0f7f5;
+  --coral: #ff6b4a;
+  --coral-light: #fff0ec;
+  --yellow: #ffd93d;
+  --yellow-light: #fffbe6;
+  --pink: #ff6eb4;
+  --pink-light: #fff0f8;
+  --green: #2ec27e;
+  --green-light: #eafaf2;
+  --red: #e05252;
+  --red-light: #fdeaea;
+  --text: #2d3142;
+  --text2: #5a6076;
+  --border: #e8e0d0;
+  --shadow: rgba(0,0,0,0.08);
+  --shadow-md: rgba(0,0,0,0.13);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* tropical leaf pattern bg */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 10% 20%, rgba(0,180,160,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(255,107,74,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,217,61,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.screen { display: none; min-height: 100vh; position: relative; z-index: 1; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ===== CONFETTI ===== */
+#confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -20px;
+  animation: confettiFall linear forwards;
+  border-radius: 2px;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== WELCOME SCREEN ===== */
+#welcome-screen {
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.welcome-inner {
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+}
+
+.palm-banner {
+  font-size: 48px;
+  margin-bottom: 8px;
+  display: block;
+  animation: sway 3s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+@keyframes sway {
+  0%,100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.welcome-title {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(30px, 6vw, 52px);
+  color: var(--teal);
+  line-height: 1.1;
+  margin-bottom: 4px;
+  text-shadow: 3px 3px 0 rgba(0,180,160,0.15);
+}
+
+.welcome-subtitle {
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* CODE CARD */
+.code-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 28px 28px 24px;
+  box-shadow: 0 8px 32px var(--shadow);
+  margin-bottom: 16px;
+  text-align: left;
+}
+.code-card h3 {
+  font-family: 'Pacifico', cursive;
+  font-size: 18px;
+  color: var(--coral);
+  margin-bottom: 18px;
+  text-align: center;
+}
+.code-error {
+  background: var(--red-light);
+  border: 1px solid rgba(224,82,82,0.3);
+  border-radius: 10px;
+  color: var(--red);
+  font-size: 13px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  display: none;
+  font-weight: 600;
+}
+.code-error.show { display: block; }
+
+.form-label {
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 800;
+  margin-bottom: 6px;
+  display: block;
+}
+.form-input {
+  width: 100%;
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  letter-spacing: 3px;
+}
+.form-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,180,160,0.15); }
+.form-input::placeholder { color: #c0b8a8; letter-spacing: 1px; font-size: 14px; }
+
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  padding: 14px 20px;
+  transition: all 0.2s;
+  margin-top: 12px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 16px rgba(0,180,160,0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,180,160,0.4); }
+.btn-primary:active { transform: translateY(0); }
+
+/* WELCOME CARD (name entry) */
+.welcome-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 8px 32px var(--shadow);
+  display: none;
+  text-align: left;
+}
+.welcome-card.show { display: block; }
+.welcome-card h3 {
+  font-family: 'Pacifico', cursive;
+  font-size: 18px;
+  color: var(--teal);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+/* MODES GRID */
+.modes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+.mode-btn {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 16px 10px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  transition: all 0.2s;
+  text-align: center;
+}
+.mode-btn:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow); }
+.mode-btn .mode-icon { font-size: 28px; display: block; margin-bottom: 6px; }
+.mode-btn .mode-name { font-size: 13px; font-weight: 800; color: var(--text); display: block; }
+.mode-btn .mode-desc { font-size: 10px; color: var(--text2); display: block; margin-top: 3px; }
+.mode-btn.mc { border-color: rgba(0,180,160,0.3); background: var(--teal-light); }
+.mode-btn.fitb { border-color: rgba(255,107,74,0.3); background: var(--coral-light); }
+.mode-btn.pair { border-color: rgba(255,110,180,0.3); background: var(--pink-light); }
+
+/* ===== TOP BAR ===== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--card);
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.top-bar-left { display: flex; align-items: center; gap: 10px; }
+.mode-badge {
+  font-family: 'Pacifico', cursive;
+  font-size: 15px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-weight: 400;
+}
+.mode-badge.mc { background: var(--teal-light); color: var(--teal-dark); }
+.mode-badge.fitb { background: var(--coral-light); color: var(--coral); }
+.mode-badge.pair { background: var(--pink-light); color: var(--pink); }
+.score-pill {
+  background: var(--yellow-light);
+  border: 2px solid var(--yellow);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+}
+.btn-ghost {
+  background: transparent;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  color: var(--text2);
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--coral); color: var(--coral); }
+
+/* PROGRESS BAR */
+.progress-wrap {
+  height: 6px;
+  background: var(--border);
+  position: relative;
+  z-index: 99;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--coral));
+  transition: width 0.4s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+/* ===== QUESTION AREA ===== */
+.q-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+.q-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 32px 28px 28px;
+  max-width: 640px;
+  width: 100%;
+  box-shadow: 0 8px 32px var(--shadow);
+}
+.q-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.q-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.q-dir-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.q-dir-badge.en { background: var(--teal-light); color: var(--teal-dark); }
+.q-dir-badge.es { background: var(--coral-light); color: var(--coral); }
+
+.q-prompt {
+  font-size: clamp(16px, 3vw, 22px);
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  background: var(--bg2);
+  border-radius: 14px;
+  border-left: 4px solid var(--teal);
+}
+
+/* MC OPTIONS */
+.mc-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.mc-opt {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: left;
+  transition: all 0.18s;
+  line-height: 1.4;
+}
+.mc-opt:hover:not(:disabled) { border-color: var(--teal); background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 4px 14px var(--shadow); }
+.mc-opt.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.mc-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+.mc-opt:disabled { cursor: not-allowed; }
+
+/* FITB */
+.fitb-wrap { display: flex; flex-direction: column; gap: 12px; }
+.fitb-input {
+  width: 100%;
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 18px;
+  outline: none;
+  transition: all 0.2s;
+}
+.fitb-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,180,160,0.15); }
+.fitb-input.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.fitb-input.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.btn-check {
+  background: linear-gradient(135deg, var(--coral) 0%, #e05530 100%);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 13px 20px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(255,107,74,0.3);
+}
+.btn-check:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,107,74,0.4); }
+
+.btn-next {
+  width: 100%;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 13px 20px;
+  transition: all 0.2s;
+  margin-top: 14px;
+  box-shadow: 0 4px 14px rgba(0,180,160,0.3);
+  display: none;
+}
+.btn-next.show { display: block; }
+.btn-next:hover { transform: translateY(-2px); }
+
+/* FEEDBACK */
+.feedback-box {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  display: none;
+  line-height: 1.5;
+}
+.feedback-box.correct { background: var(--green-light); color: var(--green); border: 2px solid rgba(46,194,126,0.3); display: block; }
+.feedback-box.wrong { background: var(--red-light); color: var(--red); border: 2px solid rgba(224,82,82,0.3); display: block; }
+
+/* PAIRING */
+.pair-instructions {
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+.pair-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pair-col-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  text-align: center;
+  padding: 4px;
+  border-radius: 8px;
+}
+.pair-col-label.left { background: var(--teal-light); color: var(--teal-dark); }
+.pair-col-label.right { background: var(--coral-light); color: var(--coral); }
+.pair-item {
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  transition: all 0.18s;
+  text-align: center;
+  line-height: 1.35;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pair-item:hover:not(.matched):not(.wrong-flash) { border-color: var(--teal); background: var(--teal-light); transform: scale(1.02); }
+.pair-item.selected { border-color: var(--coral); background: var(--coral-light); color: var(--coral); box-shadow: 0 0 0 3px rgba(255,107,74,0.2); }
+.pair-item.matched { background: var(--green-light); border-color: var(--green); color: var(--green); cursor: default; opacity: 0.7; }
+.pair-item.wrong-flash { background: var(--red-light); border-color: var(--red); animation: wrongFlash 0.5s; }
+@keyframes wrongFlash { 0%,100% { transform: scale(1); } 50% { transform: scale(0.96); } }
+
+/* ===== RESULTS SCREEN ===== */
+#results-screen {
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+.results-inner {
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+}
+.results-icon { font-size: 64px; margin-bottom: 12px; display: block; animation: bounce 0.6s ease; }
+@keyframes bounce { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+.results-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 32px;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+.results-score {
+  font-size: 56px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+.results-sub { font-size: 14px; color: var(--text2); font-weight: 700; margin-bottom: 24px; }
+.results-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px var(--shadow);
+}
+.score-bar-wrap { background: var(--border); border-radius: 8px; height: 12px; margin: 10px 0; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 8px; transition: width 1s ease; background: linear-gradient(90deg, var(--teal), var(--coral)); }
+.results-missed { text-align: left; }
+.results-missed h4 { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--text2); margin-bottom: 10px; }
+.missed-item { background: var(--red-light); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: var(--red); line-height: 1.4; }
+.missed-item span { color: var(--text2); font-weight: 600; }
+.btn-row { display: flex; gap: 10px; margin-top: 16px; }
+.btn-play-again {
+  flex: 1;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  border: none; border-radius: 14px; color: white;
+  cursor: pointer; font-family: 'Nunito', sans-serif;
+  font-size: 15px; font-weight: 800; padding: 14px;
+  transition: all 0.2s; box-shadow: 0 4px 14px rgba(0,180,160,0.3);
+}
+.btn-play-again:hover { transform: translateY(-2px); }
+.btn-home {
+  flex: 1;
+  background: var(--bg2); border: 2px solid var(--border);
+  border-radius: 14px; color: var(--text2);
+  cursor: pointer; font-family: 'Nunito', sans-serif;
+  font-size: 15px; font-weight: 800; padding: 14px;
+  transition: all 0.2s;
+}
+.btn-home:hover { border-color: var(--coral); color: var(--coral); }
+
+/* ===== HISTORY SCREEN ===== */
+#history-screen {
+  padding: 0;
+}
+.history-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--card); border-bottom: 2px solid var(--border);
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.history-title { font-family: 'Pacifico', cursive; font-size: 20px; color: var(--teal); }
+.history-content { padding: 20px; max-width: 700px; margin: 0 auto; width: 100%; }
+.history-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.history-table th { background: var(--bg2); padding: 10px 12px; text-align: left; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text2); border-bottom: 2px solid var(--border); }
+.history-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.history-table tr:hover td { background: var(--bg2); }
+
+/* ===== STREAK INDICATOR ===== */
+.streak-badge {
+  position: fixed;
+  top: 80px; right: 16px;
+  background: var(--yellow);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--text);
+  box-shadow: 0 4px 16px rgba(255,217,61,0.4);
+  z-index: 200;
+  display: none;
+  animation: popIn 0.3s ease;
+}
+@keyframes popIn { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+/* saving indicator */
+.save-toast {
+  position: fixed; bottom: 20px; right: 16px;
+  background: var(--green); color: white;
+  border-radius: 12px; padding: 10px 18px;
+  font-size: 13px; font-weight: 800;
+  z-index: 500; display: none;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 4px 16px rgba(46,194,126,0.4);
+}
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* tropical decorations */
+.tropical-deco {
+  position: fixed;
+  font-size: 32px;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+  animation: floatDeco 6s ease-in-out infinite;
+}
+.tropical-deco:nth-child(1) { top: 5%; left: 2%; animation-delay: 0s; }
+.tropical-deco:nth-child(2) { top: 15%; right: 3%; animation-delay: 1s; }
+.tropical-deco:nth-child(3) { bottom: 20%; left: 1%; animation-delay: 2s; }
+.tropical-deco:nth-child(4) { bottom: 10%; right: 2%; animation-delay: 0.5s; }
+.tropical-deco:nth-child(5) { top: 50%; left: 1%; animation-delay: 1.5s; }
+@keyframes floatDeco { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(8deg); } }
+
+/* responsive */
+@media (max-width: 480px) {
+  .mc-options { grid-template-columns: 1fr; }
+  .modes-grid { grid-template-columns: 1fr; }
+  .pair-grid { gap: 8px; }
+  .pair-item { font-size: 12px; padding: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div id="confetti-container"></div>
+
+<!-- Tropical decorations -->
+<div class="tropical-deco">🌴</div>
+<div class="tropical-deco">🌺</div>
+<div class="tropical-deco">🦜</div>
+<div class="tropical-deco">🌊</div>
+<div class="tropical-deco">🍍</div>
+
+<div class="streak-badge" id="streak-badge">🔥 <span id="streak-num">3</span> in a row!</div>
+<div class="save-toast" id="save-toast">✅ Score saved!</div>
+
+<!-- ===== WELCOME SCREEN ===== -->
+<div id="welcome-screen" class="screen active">
+  <div class="welcome-inner">
+    <span class="palm-banner">🌴</span>
+    <div class="welcome-title">¡Español!</div>
+    <div class="welcome-subtitle">Spanish Phrase Practice</div>
+
+    <div class="code-card">
+      <h3>🔐 Enter Your Access Code</h3>
+      <div class="code-error" id="code-error">❌ Invalid code — try again!</div>
+      <label class="form-label">Access Code</label>
+      <input class="form-input" id="code-input" type="text" placeholder="e.g. CAM" autocomplete="off"
+        onkeydown="if(event.key==='Enter') checkCode()">
+      <button class="btn-primary" onclick="checkCode()">🌺 Enter</button>
+    </div>
+
+    <div class="welcome-card" id="welcome-card">
+      <h3>👋 Welcome, <span id="welcome-name"></span>!</h3>
+      <p style="font-size:13px;color:var(--text2);font-weight:700;margin-bottom:20px;text-align:center;">Choose your practice mode. ¡Buena suerte! 🌟</p>
+      <div class="modes-grid">
+        <button class="mode-btn mc" onclick="startMode('mc')">
+          <span class="mode-icon">🎯</span>
+          <span class="mode-name">Multiple Choice</span>
+          <span class="mode-desc">Pick the right answer</span>
+        </button>
+        <button class="mode-btn fitb" onclick="startMode('fitb')">
+          <span class="mode-icon">✍️</span>
+          <span class="mode-name">Fill in Blank</span>
+          <span class="mode-desc">Strict spelling!</span>
+        </button>
+        <button class="mode-btn pair" onclick="startMode('pair')">
+          <span class="mode-icon">🔗</span>
+          <span class="mode-name">Pairing</span>
+          <span class="mode-desc">Match them all</span>
+        </button>
+      </div>
+      <button class="btn-ghost" style="width:100%;margin-top:14px;" onclick="showHistory()">📊 View Score History</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MC SCREEN ===== -->
+<div id="mc-screen" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span class="mode-badge mc">🎯 Multiple Choice</span>
+      <span class="score-pill" id="mc-score-pill">0 / 0</span>
+    </div>
+    <button class="btn-ghost" onclick="endSession('mc')">🏠 End</button>
+  </div>
+  <div class="progress-wrap"><div class="progress-fill" id="mc-progress" style="width:0%"></div></div>
+  <div class="q-content">
+    <div class="q-card" id="mc-card">
+      <div class="q-meta">
+        <span class="q-num" id="mc-q-num">Q 1 / 37</span>
+        <span class="q-dir-badge" id="mc-dir-badge">EN → ES</span>
+      </div>
+      <div class="q-prompt" id="mc-prompt"></div>
+      <div class="mc-options" id="mc-options"></div>
+      <div class="feedback-box" id="mc-feedback"></div>
+      <button class="btn-next" id="mc-next" onclick="nextMC()">Next ➜</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FITB SCREEN ===== -->
+<div id="fitb-screen" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span class="mode-badge fitb">✍️ Fill in Blank</span>
+      <span class="score-pill" id="fitb-score-pill">0 / 0</span>
+    </div>
+    <button class="btn-ghost" onclick="endSession('fitb')">🏠 End</button>
+  </div>
+  <div class="progress-wrap"><div class="progress-fill" id="fitb-progress" style="width:0%"></div></div>
+  <div class="q-content">
+    <div class="q-card" id="fitb-card">
+      <div class="q-meta">
+        <span class="q-num" id="fitb-q-num">Q 1 / 37</span>
+        <span class="q-dir-badge" id="fitb-dir-badge">EN → ES</span>
+      </div>
+      <div class="q-prompt" id="fitb-prompt"></div>
+      <div class="fitb-wrap">
+        <input class="fitb-input" id="fitb-input" type="text" placeholder="Type your answer here..."
+          onkeydown="if(event.key==='Enter') checkFITB()">
+        <button class="btn-check" id="fitb-check-btn" onclick="checkFITB()">✅ Check Answer</button>
+      </div>
+      <div class="feedback-box" id="fitb-feedback"></div>
+      <button class="btn-next" id="fitb-next" onclick="nextFITB()">Next ➜</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAIRING SCREEN ===== -->
+<div id="pair-screen" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span class="mode-badge pair">🔗 Pairing</span>
+      <span class="score-pill" id="pair-score-pill">0 matched</span>
+    </div>
+    <button class="btn-ghost" onclick="endSession('pair')">🏠 End</button>
+  </div>
+  <div class="progress-wrap"><div class="progress-fill" id="pair-progress" style="width:0%"></div></div>
+  <div class="q-content" style="align-items:flex-start;padding-top:16px;">
+    <div class="q-card" style="max-width:720px;">
+      <div class="pair-instructions" id="pair-instructions">Match each phrase to its translation 🌺</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+        <div class="pair-col-label left">🇺🇸 English</div>
+        <div class="pair-col-label right">🇪🇸 Spanish</div>
+      </div>
+      <div class="pair-grid" id="pair-left-col"></div>
+      <div style="display:none" id="pair-right-wrap">
+        <!-- right col populated separately -->
+      </div>
+      <div class="feedback-box" id="pair-feedback"></div>
+      <button class="btn-next" id="pair-next" onclick="nextPairRound()" style="display:none;">Next Round ➜</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RESULTS SCREEN ===== -->
+<div id="results-screen" class="screen">
+  <div class="results-inner">
+    <span class="results-icon" id="results-icon">🌟</span>
+    <div class="results-title" id="results-title">¡Excelente!</div>
+    <div class="results-score" id="results-score-pct" style="color:var(--teal)">0%</div>
+    <div class="results-sub" id="results-sub">0 correct of 0</div>
+    <div class="results-card">
+      <div class="score-bar-wrap"><div class="score-bar-fill" id="results-bar" style="width:0%"></div></div>
+      <div style="font-size:12px;color:var(--text2);font-weight:700;margin-top:6px;" id="results-mode-label"></div>
+    </div>
+    <div class="results-card results-missed" id="results-missed-wrap" style="display:none;">
+      <h4>📝 Review These</h4>
+      <div id="results-missed-list"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-play-again" onclick="playAgain()">🔄 Play Again</button>
+      <button class="btn-home" onclick="goHome()">🏠 Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HISTORY SCREEN ===== -->
+<div id="history-screen" class="screen">
+  <div class="history-topbar">
+    <span class="history-title">📊 Score History</span>
+    <button class="btn-ghost" onclick="goHome()">🏠 Home</button>
+  </div>
+  <div class="history-content" id="history-content">
+    <div style="text-align:center;padding:40px;color:var(--text2);font-weight:700;">Loading scores... 🌴</div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-2Bfv1-zhatb0IiRV9TWe0K9e7JDylTvNsqcPZ57YrfnuyirllVZHkBx0HMngF48T/exec';
+
+// ============================================================
+// VOCABULARY DATA — 37 discourse phrases
+// ============================================================
+const VOCAB = [
+  { en: "to begin with / first / at the beginning", es: "para empezar / primero / al principio" },
+  { en: "first of all", es: "en primer lugar" },
+  { en: "the main idea is", es: "la idea principal es" },
+  { en: "the author of this article", es: "el autor de este artículo" },
+  { en: "as the (author) states / suggests", es: "como afirma / sugiere (el autor)" },
+  { en: "according to", es: "de acuerdo con / según" },
+  { en: "the truth is", es: "la verdad es que" },
+  { en: "to continue", es: "para continuar / para seguir" },
+  { en: "the important thing is", es: "lo importante es" },
+  { en: "additionally, furthermore", es: "además" },
+  { en: "for example", es: "por ejemplo / un ejemplo de esto es" },
+  { en: "consequently", es: "como consecuencia" },
+  { en: "due to / because of", es: "debido a / a causa de / por culpa de" },
+  { en: "it's clear that", es: "es evidente que / está claro que" },
+  { en: "it's doubtful that", es: "es dudoso que / dudo que (subjuntivo)" },
+  { en: "one needs to keep in mind that", es: "hay que tomar en cuenta que" },
+  { en: "unfortunately, sadly", es: "desafortunadamente / desgraciadamente" },
+  { en: "to conclude", es: "para concluir / para terminar" },
+  { en: "in conclusion, finally", es: "en conclusión / en fin / en resumen" },
+  { en: "why did you have an interest in", es: "¿Por qué tenías interés en?" },
+  { en: "it's logical to think that", es: "Es lógico pensar que" },
+  { en: "what's your opinion / what do you think about", es: "¿Qué opinas (de...)? / ¿Qué piensas sobre?" },
+  { en: "what evidence is there for", es: "¿Qué evidencia hay para?" },
+  { en: "can you explain / clarify", es: "¿Me puedes explicar / aclarar?" },
+  { en: "pardon, but I don't understand", es: "Disculpa, pero no entiendo" },
+  { en: "could it be that", es: "¿Podría ser que?" },
+  { en: "I'm interested in your opinion about", es: "Me interesa tu opinion sobre" },
+  { en: "the thing that interests me most is", es: "Lo que más me interesa es" },
+  { en: "I don't agree with", es: "No estoy de acuerdo con / No coincido con" },
+  { en: "I think it's interesting to learn", es: "Qué útil aprender que" },
+  { en: "I never knew (that)", es: "Nunca sabía (que)" },
+  { en: "I want to highlight the idea that", es: "Quiero enfatizar la idea de" },
+  { en: "can we analyze the idea that", es: "¿Podemos analizar un poco más la idea de?" },
+  { en: "you've said that / you've explained that", es: "Has dicho que / has explicado que" },
+  { en: "if I understand you right", es: "Si te entiendo bien" },
+  { en: "I learned that / I understood that", es: "aprendí que / entendí que" },
+  { en: "I read something related", es: "leí algo relatado" }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let studentName = '';
+let currentMode = '';
+let sessionCorrect = 0;
+let sessionTotal = 0;
+let sessionMissed = [];
+let streak = 0;
+
+// MC state
+let mcQueue = [];
+let mcIndex = 0;
+let mcAnswered = false;
+
+// FITB state
+let fitbQueue = [];
+let fitbIndex = 0;
+let fitbAnswered = false;
+
+// Pairing state
+let pairQueue = [];
+let pairRoundIndex = 0;
+let pairSelected = null; // {side:'left'|'right', idx}
+let pairMatched = [];
+let pairRoundItems = [];
+let pairRoundCorrect = 0;
+const PAIR_ROUND_SIZE = 6;
+
+// ============================================================
+// ACCESS CODE
+// ============================================================
+async function checkCode() {
+  const code = document.getElementById('code-input').value.trim().toUpperCase();
+  if (!code) return;
+  const errEl = document.getElementById('code-error');
+  errEl.classList.remove('show');
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'checkCode', code })
+    });
+    // no-cors means opaque — use local fallback table
+  } catch(e) {}
+
+  // Local fallback (matches sheet)
+  const LOCAL_CODES = {
+    'SPANISH2026': 'Student',
+    'LIL': 'Lilian',
+    'CAM': 'Camila',
+    'ISA': 'Isabela'
+  };
+  if (LOCAL_CODES[code]) {
+    studentName = LOCAL_CODES[code];
+    document.getElementById('welcome-name').textContent = studentName;
+    document.getElementById('code-input').closest('.code-card').style.display = 'none';
+    document.getElementById('welcome-card').classList.add('show');
+  } else {
+    errEl.classList.add('show');
+    document.getElementById('code-input').value = '';
+    document.getElementById('code-input').focus();
+  }
+}
+
+// ============================================================
+// SCREEN MANAGEMENT
+// ============================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function goHome() {
+  showScreen('welcome-screen');
+  document.getElementById('welcome-card').classList.add('show');
+  document.getElementById('code-input').closest('.code-card').style.display = 'none';
+}
+
+// ============================================================
+// MODE START
+// ============================================================
+function startMode(mode) {
+  currentMode = mode;
+  sessionCorrect = 0;
+  sessionTotal = 0;
+  sessionMissed = [];
+  streak = 0;
+  if (mode === 'mc') startMC();
+  else if (mode === 'fitb') startFITB();
+  else if (mode === 'pair') startPair();
+}
+
+function playAgain() {
+  startMode(currentMode);
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function stripAccents(s) {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+function normalizeAnswer(s) {
+  // Remove punctuation at start/end, normalize spaces, strip accents
+  return stripAccents(s.replace(/[¿¡?.!,]/g, '').trim().toLowerCase().replace(/\s+/g, ' '));
+}
+
+// Check if user answer matches any alternative in the phrase
+// Strict on letters, lenient on accents, lenient on which alternative they pick
+function matchAnswer(userRaw, correctRaw) {
+  const user = normalizeAnswer(userRaw);
+  const correctAlts = correctRaw.split(/\//).map(a => normalizeAnswer(a));
+  // Also try splitting by comma for multi-part answers
+  for (const alt of correctAlts) {
+    if (user === alt) return true;
+    // Allow substring match for very long phrases (user types first variant)
+    // Levenshtein for close-enough
+    if (levenshtein(user, alt) <= Math.max(1, Math.floor(alt.length * 0.06))) return true;
+  }
+  return false;
+}
+
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  const m = a.length, n = b.length;
+  const dp = Array.from({length: m+1}, (_, i) =>
+    Array.from({length: n+1}, (_, j) => i === 0 ? j : j === 0 ? i : 0));
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+// Mixed direction: randomly EN→ES or ES→EN
+function randomDir() { return Math.random() < 0.5 ? 'en-es' : 'es-en'; }
+
+function getPromptAnswer(item, dir) {
+  if (dir === 'en-es') return { prompt: item.en, answer: item.es, promptLang: 'en', answerLang: 'es' };
+  return { prompt: item.es, answer: item.en, promptLang: 'es', answerLang: 'en' };
+}
+
+function updateStreak(correct) {
+  if (correct) {
+    streak++;
+    if (streak >= 3) {
+      const badge = document.getElementById('streak-badge');
+      document.getElementById('streak-num').textContent = streak;
+      badge.style.display = 'block';
+      setTimeout(() => { badge.style.display = 'none'; }, 2200);
+    }
+  } else {
+    streak = 0;
+    document.getElementById('streak-badge').style.display = 'none';
+  }
+}
+
+// ============================================================
+// CONFETTI
+// ============================================================
+function launchConfetti(count = 40) {
+  const container = document.getElementById('confetti-container');
+  const colors = ['#00b4a0','#ff6b4a','#ffd93d','#ff6eb4','#2ec27e','#a78bfa'];
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = (8 + Math.random() * 8) + 'px';
+    piece.style.height = (8 + Math.random() * 8) + 'px';
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    piece.style.animationDuration = (1.2 + Math.random() * 1.5) + 's';
+    piece.style.animationDelay = Math.random() * 0.4 + 's';
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 3000);
+  }
+}
+
+// ============================================================
+// SCORE SAVING
+// ============================================================
+async function saveScore(mode, correct, total) {
+  const pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  // localStorage
+  try {
+    const key = 'spanish_scores_' + studentName;
+    const stored = JSON.parse(localStorage.getItem(key) || '[]');
+    stored.push({ mode, correct, total, pct, date: new Date().toLocaleDateString(), ts: Date.now() });
+    if (stored.length > 50) stored.splice(0, stored.length - 50);
+    localStorage.setItem(key, JSON.stringify(stored));
+  } catch(e) {}
+  // Google Sheet
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'saveScore',
+        name: studentName,
+        mode,
+        correct,
+        total,
+        pct,
+        date: new Date().toLocaleDateString()
+      })
+    });
+    showToast('✅ Score saved!');
+  } catch(e) {}
+}
+
+function showToast(msg) {
+  const t = document.getElementById('save-toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 2500);
+}
+
+// ============================================================
+// RESULTS
+// ============================================================
+function showResults() {
+  const pct = sessionTotal > 0 ? Math.round(sessionCorrect / sessionTotal * 100) : 0;
+  const icon = pct >= 90 ? '🏆' : pct >= 75 ? '🌟' : pct >= 60 ? '🌺' : '💪';
+  const title = pct >= 90 ? '¡Perfecto!' : pct >= 75 ? '¡Muy bien!' : pct >= 60 ? '¡Bien hecho!' : '¡Sigue practicando!';
+  document.getElementById('results-icon').textContent = icon;
+  document.getElementById('results-title').textContent = title;
+  document.getElementById('results-score-pct').textContent = pct + '%';
+  document.getElementById('results-score-pct').style.color = pct >= 75 ? 'var(--teal)' : pct >= 50 ? 'var(--coral)' : 'var(--red)';
+  document.getElementById('results-sub').textContent = sessionCorrect + ' correct of ' + sessionTotal;
+  document.getElementById('results-mode-label').textContent = currentMode.toUpperCase() + ' mode — ' + studentName;
+  setTimeout(() => { document.getElementById('results-bar').style.width = pct + '%'; }, 100);
+
+  if (sessionMissed.length > 0) {
+    document.getElementById('results-missed-wrap').style.display = 'block';
+    document.getElementById('results-missed-list').innerHTML = sessionMissed.slice(0, 8).map(m =>
+      `<div class="missed-item">🇺🇸 ${m.prompt}<br><span>✅ ${m.answer}</span></div>`
+    ).join('');
+  } else {
+    document.getElementById('results-missed-wrap').style.display = 'none';
+  }
+
+  if (pct >= 75) launchConfetti(60);
+  saveScore(currentMode, sessionCorrect, sessionTotal);
+  showScreen('results-screen');
+}
+
+// ============================================================
+// MULTIPLE CHOICE
+// ============================================================
+function startMC() {
+  mcQueue = shuffle(VOCAB).map(item => {
+    const dir = randomDir();
+    return { item, dir };
+  });
+  mcIndex = 0;
+  showScreen('mc-screen');
+  renderMC();
+}
+
+function renderMC() {
+  if (mcIndex >= mcQueue.length) { showResults(); return; }
+  mcAnswered = false;
+  const { item, dir } = mcQueue[mcIndex];
+  const { prompt, answer } = getPromptAnswer(item, dir);
+  const pct = Math.round(mcIndex / mcQueue.length * 100);
+  document.getElementById('mc-progress').style.width = pct + '%';
+  document.getElementById('mc-q-num').textContent = `Q ${mcIndex + 1} / ${mcQueue.length}`;
+  document.getElementById('mc-dir-badge').textContent = dir === 'en-es' ? '🇺🇸 → 🇪🇸' : '🇪🇸 → 🇺🇸';
+  document.getElementById('mc-dir-badge').className = 'q-dir-badge ' + (dir === 'en-es' ? 'en' : 'es');
+  document.getElementById('mc-prompt').textContent = prompt;
+  document.getElementById('mc-feedback').className = 'feedback-box';
+  document.getElementById('mc-feedback').textContent = '';
+  document.getElementById('mc-next').className = 'btn-next';
+  document.getElementById('mc-score-pill').textContent = sessionCorrect + ' / ' + sessionTotal;
+
+  // Build 4 options: 1 correct + 3 wrong
+  const wrongPool = VOCAB.filter(v => v !== item);
+  const wrongs = shuffle(wrongPool).slice(0, 3).map(v => dir === 'en-es' ? v.es : v.en);
+  const options = shuffle([answer, ...wrongs]);
+
+  const container = document.getElementById('mc-options');
+  container.innerHTML = options.map((opt, i) =>
+    `<button class="mc-opt" onclick="selectMC(this, '${escStr(opt)}', '${escStr(answer)}')">${opt}</button>`
+  ).join('');
+}
+
+function escStr(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
+
+function selectMC(btn, chosen, correct) {
+  if (mcAnswered) return;
+  mcAnswered = true;
+  sessionTotal++;
+  const allBtns = document.querySelectorAll('.mc-opt');
+  allBtns.forEach(b => b.disabled = true);
+
+  const isCorrect = normalizeAnswer(chosen) === normalizeAnswer(correct);
+  if (isCorrect) {
+    btn.classList.add('correct');
+    sessionCorrect++;
+    updateStreak(true);
+    launchConfetti(20);
+    document.getElementById('mc-feedback').className = 'feedback-box correct';
+    document.getElementById('mc-feedback').textContent = '🎉 ¡Correcto!';
+  } else {
+    btn.classList.add('wrong');
+    updateStreak(false);
+    // highlight correct
+    allBtns.forEach(b => {
+      if (normalizeAnswer(b.textContent) === normalizeAnswer(correct)) b.classList.add('correct');
+    });
+    sessionMissed.push({ prompt: mcQueue[mcIndex].item.en, answer: mcQueue[mcIndex].item.es });
+    document.getElementById('mc-feedback').className = 'feedback-box wrong';
+    document.getElementById('mc-feedback').textContent = `❌ The answer is: ${correct}`;
+  }
+  document.getElementById('mc-score-pill').textContent = sessionCorrect + ' / ' + sessionTotal;
+  document.getElementById('mc-next').className = 'btn-next show';
+}
+
+function nextMC() {
+  mcIndex++;
+  renderMC();
+}
+
+// ============================================================
+// FILL IN THE BLANK
+// ============================================================
+function startFITB() {
+  fitbQueue = shuffle(VOCAB).map(item => {
+    const dir = randomDir();
+    return { item, dir };
+  });
+  fitbIndex = 0;
+  showScreen('fitb-screen');
+  renderFITB();
+}
+
+function renderFITB() {
+  if (fitbIndex >= fitbQueue.length) { showResults(); return; }
+  fitbAnswered = false;
+  const { item, dir } = fitbQueue[fitbIndex];
+  const { prompt, answer } = getPromptAnswer(item, dir);
+  const pct = Math.round(fitbIndex / fitbQueue.length * 100);
+  document.getElementById('fitb-progress').style.width = pct + '%';
+  document.getElementById('fitb-q-num').textContent = `Q ${fitbIndex + 1} / ${fitbQueue.length}`;
+  document.getElementById('fitb-dir-badge').textContent = dir === 'en-es' ? '🇺🇸 → 🇪🇸' : '🇪🇸 → 🇺🇸';
+  document.getElementById('fitb-dir-badge').className = 'q-dir-badge ' + (dir === 'en-es' ? 'en' : 'es');
+  document.getElementById('fitb-prompt').textContent = prompt;
+  const inp = document.getElementById('fitb-input');
+  inp.value = '';
+  inp.className = 'fitb-input';
+  inp.disabled = false;
+  inp.focus();
+  document.getElementById('fitb-feedback').className = 'feedback-box';
+  document.getElementById('fitb-feedback').textContent = '';
+  document.getElementById('fitb-next').className = 'btn-next';
+  document.getElementById('fitb-check-btn').style.display = 'block';
+  document.getElementById('fitb-score-pill').textContent = sessionCorrect + ' / ' + sessionTotal;
+  // store answer for checking
+  fitbQueue[fitbIndex]._answer = answer;
+}
+
+function checkFITB() {
+  if (fitbAnswered) return;
+  const inp = document.getElementById('fitb-input');
+  const userVal = inp.value;
+  if (!userVal.trim()) { inp.focus(); return; }
+  fitbAnswered = true;
+  sessionTotal++;
+  const answer = fitbQueue[fitbIndex]._answer;
+  const isCorrect = matchAnswer(userVal, answer);
+  inp.disabled = true;
+  document.getElementById('fitb-check-btn').style.display = 'none';
+
+  if (isCorrect) {
+    inp.classList.add('correct');
+    sessionCorrect++;
+    updateStreak(true);
+    launchConfetti(20);
+    document.getElementById('fitb-feedback').className = 'feedback-box correct';
+    document.getElementById('fitb-feedback').textContent = '🎉 ¡Correcto!';
+  } else {
+    inp.classList.add('wrong');
+    updateStreak(false);
+    sessionMissed.push({ prompt: fitbQueue[fitbIndex].item.en, answer: fitbQueue[fitbIndex].item.es });
+    document.getElementById('fitb-feedback').className = 'feedback-box wrong';
+    document.getElementById('fitb-feedback').innerHTML = `❌ Correct answer: <strong>${answer}</strong>`;
+  }
+  document.getElementById('fitb-score-pill').textContent = sessionCorrect + ' / ' + sessionTotal;
+  document.getElementById('fitb-next').className = 'btn-next show';
+}
+
+function nextFITB() {
+  fitbIndex++;
+  renderFITB();
+}
+
+// ============================================================
+// PAIRING — 6 pairs per round, mixed direction
+// ============================================================
+function startPair() {
+  pairQueue = shuffle(VOCAB);
+  pairRoundIndex = 0;
+  sessionCorrect = 0;
+  sessionTotal = 0;
+  showScreen('pair-screen');
+  renderPairRound();
+}
+
+function renderPairRound() {
+  const start = pairRoundIndex * PAIR_ROUND_SIZE;
+  const end = Math.min(start + PAIR_ROUND_SIZE, pairQueue.length);
+  if (start >= pairQueue.length) { showResults(); return; }
+
+  pairRoundItems = pairQueue.slice(start, end);
+  pairMatched = [];
+  pairSelected = null;
+  pairRoundCorrect = 0;
+
+  // For each item, randomly decide direction
+  const dirs = pairRoundItems.map(() => randomDir());
+
+  // Left column = prompts, Right column = answers (shuffled)
+  const leftItems = pairRoundItems.map((item, i) => ({
+    id: i,
+    text: dirs[i] === 'en-es' ? item.en : item.es,
+    dir: dirs[i],
+    side: 'left'
+  }));
+  const rightItems = shuffle(pairRoundItems.map((item, i) => ({
+    id: i,
+    text: dirs[i] === 'en-es' ? item.es : item.en,
+    dir: dirs[i],
+    side: 'right'
+  })));
+
+  // Store for matching
+  window._pairLeft = leftItems;
+  window._pairRight = rightItems;
+
+  const roundNum = pairRoundIndex + 1;
+  const totalRounds = Math.ceil(pairQueue.length / PAIR_ROUND_SIZE);
+  document.getElementById('pair-instructions').textContent =
+    `Round ${roundNum} of ${totalRounds} — Match each phrase! 🌺`;
+
+  const pct = Math.round(pairRoundIndex / totalRounds * 100);
+  document.getElementById('pair-progress').style.width = pct + '%';
+  document.getElementById('pair-score-pill').textContent = sessionCorrect + ' matched';
+  document.getElementById('pair-feedback').className = 'feedback-box';
+  document.getElementById('pair-next').style.display = 'none';
+
+  // Build grid: left and right side by side
+  const grid = document.getElementById('pair-left-col');
+  grid.style.gridTemplateColumns = '1fr 1fr';
+  grid.innerHTML = '';
+
+  // Interleave left + right in the grid
+  // We'll use a flat 2-col grid, left items col1, right items col2
+  // But since grid is 1fr 1fr, we alternate: left[0], right[0], left[1], right[1]...
+  for (let i = 0; i < Math.max(leftItems.length, rightItems.length); i++) {
+    if (leftItems[i]) {
+      const el = document.createElement('div');
+      el.className = 'pair-item';
+      el.dataset.side = 'left';
+      el.dataset.id = leftItems[i].id;
+      el.textContent = leftItems[i].text;
+      el.onclick = () => selectPairItem(el, 'left', leftItems[i].id);
+      grid.appendChild(el);
+    }
+    if (rightItems[i]) {
+      const el = document.createElement('div');
+      el.className = 'pair-item';
+      el.dataset.side = 'right';
+      el.dataset.id = rightItems[i].id;
+      el.textContent = rightItems[i].text;
+      el.onclick = () => selectPairItem(el, 'right', rightItems[i].id);
+      grid.appendChild(el);
+    }
+  }
+}
+
+function selectPairItem(el, side, id) {
+  if (el.classList.contains('matched')) return;
+
+  if (!pairSelected) {
+    // First selection
+    pairSelected = { el, side, id };
+    el.classList.add('selected');
+  } else {
+    // Second selection
+    if (pairSelected.el === el) {
+      // Deselect
+      el.classList.remove('selected');
+      pairSelected = null;
+      return;
+    }
+    if (pairSelected.side === side) {
+      // Same side — switch selection
+      pairSelected.el.classList.remove('selected');
+      pairSelected = { el, side, id };
+      el.classList.add('selected');
+      return;
+    }
+    // Check match: ids must be equal (same vocab item)
+    const isMatch = pairSelected.id === id;
+    if (isMatch) {
+      pairSelected.el.classList.remove('selected');
+      pairSelected.el.classList.add('matched');
+      el.classList.add('matched');
+      pairMatched.push(id);
+      sessionCorrect++;
+      sessionTotal++;
+      pairRoundCorrect++;
+      updateStreak(true);
+      launchConfetti(15);
+      document.getElementById('pair-score-pill').textContent = sessionCorrect + ' matched';
+      pairSelected = null;
+
+      // Check round complete
+      if (pairMatched.length === pairRoundItems.length) {
+        setTimeout(() => {
+          document.getElementById('pair-feedback').className = 'feedback-box correct';
+          document.getElementById('pair-feedback').textContent = `🎉 Round complete! ${pairRoundCorrect}/${pairRoundItems.length} matched!`;
+          launchConfetti(40);
+          const totalRounds = Math.ceil(pairQueue.length / PAIR_ROUND_SIZE);
+          if ((pairRoundIndex + 1) >= totalRounds) {
+            setTimeout(showResults, 1200);
+          } else {
+            document.getElementById('pair-next').style.display = 'block';
+          }
+        }, 400);
+      }
+    } else {
+      // Wrong match
+      pairSelected.el.classList.remove('selected');
+      pairSelected.el.classList.add('wrong-flash');
+      el.classList.add('wrong-flash');
+      sessionTotal++;
+      updateStreak(false);
+      const wrongItem = pairRoundItems[pairSelected.id];
+      if (wrongItem) sessionMissed.push({ prompt: wrongItem.en, answer: wrongItem.es });
+      setTimeout(() => {
+        pairSelected.el.classList.remove('wrong-flash');
+        el.classList.remove('wrong-flash');
+      }, 600);
+      pairSelected = null;
+    }
+  }
+}
+
+function nextPairRound() {
+  pairRoundIndex++;
+  renderPairRound();
+}
+
+// ============================================================
+// END SESSION
+// ============================================================
+function endSession(mode) {
+  if (sessionTotal > 0) showResults();
+  else goHome();
+}
+
+// ============================================================
+// HISTORY
+// ============================================================
+async function showHistory() {
+  showScreen('history-screen');
+  const content = document.getElementById('history-content');
+  content.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2);font-weight:700;">Loading... 🌴</div>';
+
+  try {
+    // Load from localStorage
+    const key = 'spanish_scores_' + studentName;
+    let scores = [];
+    try { scores = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) {}
+
+    if (scores.length === 0) {
+      content.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2);font-weight:700;">No scores yet — start practicing! 🌺</div>';
+      return;
+    }
+
+    const totalCorrect = scores.reduce((a, s) => a + (s.correct || 0), 0);
+    const totalQ = scores.reduce((a, s) => a + (s.total || 0), 0);
+    const overallPct = totalQ > 0 ? Math.round(totalCorrect / totalQ * 100) : 0;
+    const pctColor = overallPct >= 80 ? 'var(--green)' : overallPct >= 60 ? 'var(--yellow)' : 'var(--red)';
+
+    let html = `<div style="background:var(--teal-light);border:2px solid rgba(0,180,160,0.3);border-radius:16px;padding:20px;margin-bottom:20px;display:flex;gap:20px;align-items:center">
+      <div style="text-align:center;min-width:80px">
+        <div style="font-size:36px;font-weight:900;color:${pctColor}">${overallPct}%</div>
+        <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;font-weight:800">Overall</div>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:13px;color:var(--text2);font-weight:700">${totalCorrect} correct of ${totalQ} answered across ${scores.length} session(s)</div>
+        <div style="background:var(--border);border-radius:6px;height:10px;margin-top:8px;overflow:hidden">
+          <div style="background:${pctColor};width:${overallPct}%;height:10px;border-radius:6px"></div>
+        </div>
+      </div>
+    </div>`;
+
+    html += `<table class="history-table"><thead><tr>
+      <th>#</th><th>Mode</th><th>Score</th><th>Correct/Total</th><th>Date</th>
+    </tr></thead><tbody>`;
+
+    const sorted = [...scores].sort((a, b) => (b.ts || 0) - (a.ts || 0));
+    sorted.forEach((s, i) => {
+      const c = s.pct >= 80 ? 'var(--green)' : s.pct >= 60 ? 'var(--yellow)' : 'var(--red)';
+      html += `<tr>
+        <td style="color:var(--text2)">#${sorted.length - i}</td>
+        <td>${(s.mode || '—').toUpperCase()}</td>
+        <td><strong style="color:${c}">${s.pct}%</strong></td>
+        <td>${s.correct} / ${s.total}</td>
+        <td style="color:var(--text2);font-size:12px">${s.date || '—'}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    content.innerHTML = html;
+  } catch(e) {
+    content.innerHTML = '<div style="text-align:center;padding:40px;color:var(--red);font-weight:700;">Could not load scores.</div>';
+  }
+}
+
+// Enter key on code input
+document.getElementById('code-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkCode();
+});
+
+window.addEventListener('beforeunload', () => {
+  if (sessionTotal > 0) saveScore(currentMode, sessionCorrect, sessionTotal);
+});
+</script>
+</body>
+</html>
