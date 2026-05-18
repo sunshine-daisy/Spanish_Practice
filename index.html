@@ -84,8 +84,8 @@ body::before {
 /* ===== WELCOME SCREEN ===== */
 #welcome-screen {
   align-items: center;
-  justify-content: center;
-  padding: 20px;
+  justify-content: flex-start;
+  padding: 40px 20px 20px;
   min-height: 100vh;
 }
 
@@ -97,10 +97,11 @@ body::before {
 
 .palm-banner {
   font-size: 48px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   display: block;
   animation: sway 3s ease-in-out infinite;
   transform-origin: bottom center;
+  line-height: 1;
 }
 @keyframes sway {
   0%,100% { transform: rotate(-5deg); }
@@ -109,10 +110,10 @@ body::before {
 
 .welcome-title {
   font-family: 'Pacifico', cursive;
-  font-size: clamp(30px, 6vw, 52px);
+  font-size: clamp(28px, 5vw, 46px);
   color: var(--teal);
-  line-height: 1.1;
-  margin-bottom: 4px;
+  line-height: 1.2;
+  margin-bottom: 6px;
   text-shadow: 3px 3px 0 rgba(0,180,160,0.15);
 }
 
@@ -122,7 +123,7 @@ body::before {
   letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 700;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 /* CODE CARD */
@@ -309,9 +310,9 @@ body::before {
 .q-content {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 24px 16px;
+  padding: 32px 16px 24px;
 }
 .q-card {
   background: var(--card);
@@ -745,7 +746,7 @@ body::before {
     <button class="btn-ghost" onclick="endSession('pair')">🏠 End</button>
   </div>
   <div class="progress-wrap"><div class="progress-fill" id="pair-progress" style="width:0%"></div></div>
-  <div class="q-content" style="align-items:flex-start;padding-top:16px;">
+  <div class="q-content" style="align-items:flex-start;padding-top:24px;">
     <div class="q-card" style="max-width:720px;">
       <div class="pair-instructions" id="pair-instructions">Match each phrase to its translation 🌺</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
